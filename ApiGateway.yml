@@ -4,3 +4,32 @@ spring:
 
   zipkin:
     base-url: http://localhost:9411/
+  cloud:
+    gateway:
+      routes:
+        - id: borrowsService
+          uri: lb://BorrowingService
+          predicates:
+            - Path=/borrows/**
+        - id: CustomerService
+          uri: lb://customerService
+          predicates:
+            - Path=/customers/**
+        - id: BooksCommandService
+          uri: lb://bookcommand
+          predicates:
+            - Path=/bookcommand/**
+        - id: BooksQueryService
+          uri: lb://BooksQueryService
+          predicates:
+            - Path=/bookquery/**
+        - id: ReviewService
+          uri: lb://ReviewService
+          predicates:
+            - Path=/review/**
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
